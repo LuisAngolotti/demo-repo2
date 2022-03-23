@@ -1,21 +1,21 @@
-pip install streamlit-aggrid
-
 import pandas as pd
 import streamlit as st
 from st_aggrid import AgGrid, GridOptionsBuilder
 from st_aggrid.shared import GridUpdateMode
 import sqlite3
 
+
 def convert_table_to_df(db_path, table_name):
     dat = sqlite3.connect(db_path)
     query = dat.execute("""SELECT * FROM {}""".format(table_name))
     cols = [column[0] for column in query.description]
-    results= pd.DataFrame.from_records(data = query.fetchall(), columns = cols)
+    results = pd.DataFrame.from_records(data=query.fetchall(), columns=cols)
     return results
+
 
 df = convert_table_to_df("track_metadata.db", "songs")
 
-#display(df)
+# display(df)
 
 
 def aggrid_interactive_table(df: pd.DataFrame):
@@ -46,9 +46,9 @@ def aggrid_interactive_table(df: pd.DataFrame):
     return selection
 
 
-#iris = pd.read_csv(
+# iris = pd.read_csv(
 #    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-#)
+# )
 
 selection = aggrid_interactive_table(df=df)
 
